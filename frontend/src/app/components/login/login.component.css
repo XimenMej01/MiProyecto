@@ -1,0 +1,30 @@
+.login-page { min-height: 100vh; display: grid; place-items: center; padding: 34px 18px; background: radial-gradient(circle at 10% 10%, #e8f0e7, transparent 34%), #f5f7f3; }
+.login-shell { width: min(1060px, 100%); min-height: 650px; display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; border: 1px solid #e5ebe3; border-radius: 27px; background: #fff; box-shadow: 0 24px 80px rgba(27, 55, 37, .10); }
+.login-art { position: relative; display: flex; flex-direction: column; padding: 48px 52px 34px; overflow: hidden; color: #f6fbf5; background: linear-gradient(150deg, #234a35, #326447 60%, #427650); }
+.brand-mark { display: grid; place-items: center; width: 46px; height: 46px; border: 1px solid rgba(255,255,255,.32); border-radius: 15px; font-size: 27px; }
+.eyebrow, .section-kicker { margin-top: 56px; font-size: .68rem; font-weight: 800; letter-spacing: .18em; color: #b8d6bd; }
+.login-art h1 { max-width: 400px; margin: 13px 0 16px; font-size: clamp(2.25rem, 4vw, 3.35rem); line-height: 1.08; letter-spacing: -.055em; font-weight: 760; }
+.art-copy { max-width: 370px; color: #d5e5d7; line-height: 1.75; }
+.seed-illustration { position: relative; height: 190px; margin-top: auto; opacity: .9; }
+.stem { position: absolute; left: 52%; bottom: -40px; width: 3px; height: 200px; border-radius: 4px; background: #c2d9ad; transform: rotate(18deg); }
+.leaf { position: absolute; display: block; width: 90px; height: 42px; border: 2px solid #d3e3bd; border-radius: 100% 0 100% 0; background: rgba(195,221,175,.13); }
+.leaf-one { left: 32%; top: 40px; transform: rotate(18deg); }
+.leaf-two { left: 52%; top: 8px; transform: rotate(-24deg) scaleX(-1); }
+.leaf-three { left: 55%; top: 93px; transform: rotate(18deg); width: 70px; }
+.seed-dot { position: absolute; left: 49%; top: 115px; width: 24px; height: 34px; border-radius: 80% 20% 80% 20%; background: #d9bd79; transform: rotate(35deg); }
+.art-footer { display: flex; justify-content: space-between; margin-top: 10px; color: #c6d9c8; font-size: .76rem; }
+.login-form-panel { display: flex; flex-direction: column; justify-content: center; padding: 70px clamp(32px, 5vw, 70px) 38px; }
+.form-heading .section-kicker { display: block; margin: 0 0 12px; color: #63856b; }
+.form-heading h2 { margin: 0 0 10px; color: #1e3b2a; font-size: 2.2rem; font-weight: 760; letter-spacing: -.05em; }
+.form-heading p { margin: 0 0 34px; color: #7a867d; line-height: 1.6; }
+.login-form-panel .form-control { min-height: 53px; border-color: #e1e8e0; border-radius: 11px; font-size: .95rem; }
+.password-wrap { position: relative; }
+.password-wrap input { padding-right: 65px; }
+.password-toggle { position: absolute; top: 50%; right: 12px; transform: translateY(-50%); border: 0; background: transparent; color: #52745b; font-size: .8rem; font-weight: 700; }
+.login-submit { min-height: 54px; margin-top: 11px; border-radius: 11px; font-size: .95rem; font-weight: 700; }
+.login-submit span[aria-hidden] { margin-left: 9px; font-size: 1.15rem; }
+.login-note { display: flex; gap: 10px; margin-top: 25px; padding: 13px; border-radius: 10px; color: #6e7d70; background: #f3f7f2; font-size: .78rem; line-height: 1.5; }
+.note-icon { display: grid; flex: 0 0 19px; place-items: center; width: 19px; height: 19px; border-radius: 50%; color: #47704f; background: #e0ecdf; font-weight: 800; }
+.login-bottom { margin-top: auto; padding-top: 42px; color: #9aa49b; text-align: center; font-size: .75rem; }
+.mobile-brand { display: none; }
+@media (max-width: 760px) { .login-page { padding: 12px; } .login-shell { grid-template-columns: 1fr; min-height: auto; border-radius: 20px; } .login-art { display: none; } .login-form-panel { padding: 34px 26px 26px; } .mobile-brand { display: block; margin-bottom: 38px; color: #294e36; font-weight: 800; } .mobile-brand span { margin-right: 8px; color: #44845a; font-size: 1.4rem; } .form-heading p { margin-bottom: 25px; } .login-bottom { padding-top: 30px; } }

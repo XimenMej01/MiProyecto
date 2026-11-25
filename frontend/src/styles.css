@@ -1,0 +1,36 @@
+:root {
+  --green-950: #173626;
+  --green-900: #204632;
+  --green-800: #28563d;
+  --green-700: #34734d;
+  --green-600: #438b5e;
+  --green-100: #eaf3ec;
+  --green-50: #f4f8f4;
+  --ink: #25352b;
+  --muted: #738078;
+  --canvas: #f5f7f3;
+  --border: #e3e9e2;
+  --bs-primary: #34734d;
+  --bs-primary-rgb: 52, 115, 77;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  background: var(--canvas);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+button, input, select, textarea { font: inherit; }
+a { color: inherit; }
+.btn-primary { --bs-btn-bg: var(--green-700); --bs-btn-border-color: var(--green-700); --bs-btn-hover-bg: var(--green-800); --bs-btn-hover-border-color: var(--green-800); }
+.btn-outline-primary { --bs-btn-color: var(--green-700); --bs-btn-border-color: #a9c5ae; --bs-btn-hover-bg: var(--green-700); --bs-btn-hover-border-color: var(--green-700); }
+.form-control:focus, .form-select:focus { border-color: #83b393; box-shadow: 0 0 0 .2rem rgba(52,115,77,.13); }
+.card-soft { border: 1px solid var(--border); border-radius: 18px; background: #fff; box-shadow: 0 8px 28px rgba(27,55,37,.045); }
+.text-muted-custom { color: var(--muted); }
+.badge-available { background: #e4f3e8; color: #27613b; }
+.badge-empty { background: #fff1df; color: #95601e; }
+.page-title { font-weight: 750; letter-spacing: -.035em; color: var(--green-950); }
+.form-label { font-weight: 600; color: #425248; font-size: .9rem; }
+.form-hint { font-size: .78rem; color: var(--muted); }

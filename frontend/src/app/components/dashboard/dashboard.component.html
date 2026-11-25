@@ -1,0 +1,48 @@
+<div class="app-layout">
+  <aside class="sidebar">
+    <a class="sidebar-brand" routerLink="/dashboard"><span class="brand-icon">✿</span><span>Banco de<br><b>Semillas</b></span></a>
+    <div class="sidebar-caption">MENÚ PRINCIPAL</div>
+    <a class="side-link active" routerLink="/dashboard"><span>▦</span> Resumen</a>
+    <a class="side-link" routerLink="/semillas"><span>❀</span> Gestión de semillas</a>
+    <div class="sidebar-bottom">
+      <div class="sidebar-user"><div class="avatar">{{ nombre.charAt(0).toUpperCase() }}</div><div><b>{{ nombre }}</b><small>Administrador</small></div></div>
+      <button class="side-logout" type="button" (click)="cerrarSesion()">↪ <span>Cerrar sesión</span></button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar"><div><span class="breadcrumb-text">Banco comunitario /</span> <b>Resumen</b></div><div class="topbar-right"><span class="online-dot"></span> Sistema activo</div></header>
+    <div class="content-wrap">
+      <section class="welcome-row">
+        <div><span class="section-tag">PANEL GENERAL</span><h1 class="page-title">¡Hola, {{ nombre }}!</h1><p class="text-muted-custom mb-0">Este es el resumen actual de tu banco comunitario de semillas.</p></div>
+        <a class="btn btn-primary px-4 py-2" routerLink="/semillas">Gestionar semillas <span class="ms-2">→</span></a>
+      </section>
+
+      @if (error) { <div class="alert alert-warning">{{ error }}</div> }
+      <section class="stats-grid" aria-label="Estadisticas de semillas">
+        <article class="stat-card"><div class="stat-top"><span>Total de variedades</span><span class="stat-icon green">✿</span></div><div class="stat-number">{{ cargando ? '—' : estadisticas.totalSemillas }}</div><div class="stat-foot">Registros en el banco</div></article>
+        <article class="stat-card"><div class="stat-top"><span>Disponibles</span><span class="stat-icon mint">✓</span></div><div class="stat-number">{{ cargando ? '—' : estadisticas.disponibles }}</div><div class="stat-foot">Con existencias mayores a cero</div></article>
+        <article class="stat-card"><div class="stat-top"><span>Agotadas</span><span class="stat-icon amber">!</span></div><div class="stat-number">{{ cargando ? '—' : estadisticas.agotadas }}</div><div class="stat-foot">Sin cantidad disponible</div></article>
+        <article class="stat-card"><div class="stat-top"><span>Categorías</span><span class="stat-icon violet">▤</span></div><div class="stat-number">{{ cargando ? '—' : estadisticas.categorias }}</div><div class="stat-foot">Tipos de semillas registrados</div></article>
+      </section>
+
+      <section class="dashboard-lower">
+        <article class="feature-card">
+          <div class="feature-badge">✦ CONSERVACIÓN COMUNITARIA</div>
+          <h2>Pequeñas semillas,<br>grandes posibilidades.</h2>
+          <p>Registra las variedades, mantén sus datos organizados y conoce su disponibilidad desde un solo lugar.</p>
+          <a routerLink="/semillas" class="feature-link">Ir a gestión de semillas <span>→</span></a>
+          <div class="feature-plant" aria-hidden="true">❋</div>
+        </article>
+        <article class="quick-card">
+          <span class="section-tag">ACCESO RÁPIDO</span>
+          <h3>¿Qué deseas hacer?</h3>
+          <a routerLink="/semillas" class="quick-action"><span class="quick-icon">＋</span><span><b>Registrar una semilla</b><small>Agregar una nueva variedad al banco</small></span><span class="quick-arrow">→</span></a>
+          <a routerLink="/semillas" class="quick-action"><span class="quick-icon">⌕</span><span><b>Consultar registros</b><small>Buscar y revisar las semillas guardadas</small></span><span class="quick-arrow">→</span></a>
+          <button type="button" class="refresh-action" (click)="cargarEstadisticas()">↻ Actualizar estadísticas</button>
+        </article>
+      </section>
+      <footer class="page-footer">Banco Comunitario de Semillas <span>Conservar para compartir.</span></footer>
+    </div>
+  </main>
+</div>

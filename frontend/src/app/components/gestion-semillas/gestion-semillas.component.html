@@ -1,0 +1,75 @@
+<div class="app-layout">
+  <aside class="sidebar">
+    <a class="sidebar-brand" routerLink="/dashboard"><span class="brand-icon">✿</span><span>Banco de<br><b>Semillas</b></span></a>
+    <div class="sidebar-caption">MENÚ PRINCIPAL</div>
+    <a class="side-link" routerLink="/dashboard"><span>▦</span> Resumen</a>
+    <a class="side-link active" routerLink="/semillas"><span>❀</span> Gestión de semillas</a>
+    <div class="sidebar-bottom">
+      <div class="sidebar-user"><div class="avatar">{{ authNombreInicial }}</div><div><b>{{ authNombre }}</b><small>Administrador</small></div></div>
+      <button class="side-logout" type="button" (click)="cerrarSesion()">↪ <span>Cerrar sesión</span></button>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar"><div><span class="breadcrumb-text">Banco comunitario /</span> <b>Gestión de semillas</b></div><div class="topbar-right"><span class="online-dot"></span> Sistema activo</div></header>
+    <div class="content-wrap">
+      <section class="page-heading-row">
+        <div><span class="section-tag">CATÁLOGO DEL BANCO</span><h1 class="page-title">Gestión de semillas</h1><p class="text-muted-custom mb-0">Organiza las variedades y consulta su disponibilidad.</p></div>
+        <button type="button" class="btn btn-primary px-4 py-2" (click)="nuevoRegistro()">＋ Nueva semilla</button>
+      </section>
+
+      @if (mostrarFormulario) {
+        <section class="form-card card-soft mb-4">
+          <div class="form-card-heading"><div><span class="section-tag">{{ idEdicion === null ? 'NUEVO REGISTRO' : 'ACTUALIZAR INFORMACIÓN' }}</span><h2>{{ idEdicion === null ? 'Registrar semilla' : 'Editar semilla' }}</h2><p>Completa los datos de la variedad que deseas guardar.</p></div><button class="close-form" type="button" (click)="cancelarFormulario()" aria-label="Cerrar formulario">×</button></div>
+          <form [formGroup]="formulario" (ngSubmit)="guardar()" novalidate>
+            <div class="row g-3">
+              <div class="col-md-6"><label class="form-label" for="nombre">Nombre común *</label><input id="nombre" class="form-control" formControlName="nombre" placeholder="Ej. Tomate" [class.is-invalid]="obtenerError('nombre')"><div class="invalid-feedback">{{ obtenerError('nombre') }}</div></div>
+              <div class="col-md-6"><label class="form-label" for="variedad">Variedad *</label><input id="variedad" class="form-control" formControlName="variedad" placeholder="Ej. Cherry" [class.is-invalid]="obtenerError('variedad')"><div class="invalid-feedback">{{ obtenerError('variedad') }}</div></div>
+              <div class="col-md-6"><label class="form-label" for="categoria">Categoría *</label><select id="categoria" class="form-select" formControlName="categoria" [class.is-invalid]="obtenerError('categoria')"><option value="">Selecciona una categoría</option>@for (categoria of categorias; track categoria) { <option [value]="categoria">{{ categoria }}</option> }</select><div class="invalid-feedback">{{ obtenerError('categoria') }}</div></div>
+              <div class="col-md-6"><label class="form-label" for="cantidad">Cantidad disponible (gramos) *</label><input id="cantidad" type="number" min="0" step="0.01" class="form-control" formControlName="cantidad" [class.is-invalid]="obtenerError('cantidad')"><div class="invalid-feedback">{{ obtenerError('cantidad') }}</div><div class="form-hint">Usa 0 cuando la variedad no tenga existencias.</div></div>
+              <div class="col-md-6"><label class="form-label" for="procedencia">Procedencia *</label><input id="procedencia" class="form-control" formControlName="procedencia" placeholder="Ej. Chiclayo" [class.is-invalid]="obtenerError('procedencia')"><div class="invalid-feedback">{{ obtenerError('procedencia') }}</div></div>
+              <div class="col-md-6"><label class="form-label" for="fechaRegistro">Fecha de registro *</label><input id="fechaRegistro" type="date" [max]="hoy" class="form-control" formControlName="fechaRegistro" [class.is-invalid]="obtenerError('fechaRegistro')"><div class="invalid-feedback">{{ obtenerError('fechaRegistro') }}</div><div class="form-hint">Al editar, se conserva la fecha original.</div></div>
+              <div class="col-12"><label class="form-label" for="descripcion">Descripción</label><textarea id="descripcion" rows="3" class="form-control" formControlName="descripcion" placeholder="Información adicional sobre la semilla..."></textarea><div class="form-hint text-end">{{ formulario.controls.descripcion.value.length }}/500</div></div>
+            </div>
+            <div class="form-actions"><button type="button" class="btn btn-light px-4" (click)="cancelarFormulario()">Cancelar</button><button type="submit" class="btn btn-primary px-4" [disabled]="guardando">@if (guardando) { <span class="spinner-border spinner-border-sm me-2"></span>Guardando... } @else { {{ idEdicion === null ? 'Guardar semilla' : 'Actualizar' }} }</button></div>
+          </form>
+        </section>
+      }
+
+      <section class="table-card card-soft">
+        <div class="table-card-heading"><div><h2>Semillas registradas</h2><p>Consulta y administra las variedades del banco.</p></div><span class="record-count">{{ semillas.length }} registros</span></div>
+        <div class="filters-row">
+          <div class="search-box"><span>⌕</span><input type="search" [(ngModel)]="busqueda" placeholder="Buscar por nombre, variedad o procedencia..." aria-label="Buscar semillas"></div>
+          <select class="form-select category-filter" [(ngModel)]="filtroCategoria" aria-label="Filtrar por categoría"><option value="">Todas las categorías</option>@for (categoria of categorias; track categoria) { <option [value]="categoria">{{ categoria }}</option> }</select>
+        </div>
+
+        @if (errorCarga) { <div class="alert alert-warning mx-4">{{ errorCarga }}</div> }
+        <div class="table-responsive">
+          <table class="table seed-table align-middle mb-0">
+            <thead><tr><th>SEMILLA</th><th>CATEGORÍA</th><th>CANTIDAD</th><th>PROCEDENCIA</th><th>ESTADO</th><th class="text-end">ACCIONES</th></tr></thead>
+            <tbody>
+              @if (cargando) {
+                <tr><td colspan="6" class="empty-state"><span class="spinner-border spinner-border-sm me-2"></span>Cargando registros...</td></tr>
+              } @else if (semillasFiltradas.length === 0) {
+                <tr><td colspan="6" class="empty-state"><span class="empty-icon">❀</span><b>No se encontraron semillas</b><small>Prueba con otra búsqueda o registra una nueva variedad.</small></td></tr>
+              } @else {
+                @for (semilla of semillasFiltradas; track semilla.id) {
+                  <tr>
+                    <td><div class="seed-name"><span class="seed-symbol">✿</span><span><b>{{ semilla.nombre }}</b><small>{{ semilla.variedad }}</small></span></div></td>
+                    <td><span class="category-chip">{{ semilla.categoria }}</span></td>
+                    <td><b class="quantity-value">{{ semilla.cantidad | number:'1.0-2' }} g</b></td>
+                    <td class="origin-cell">{{ semilla.procedencia }}</td>
+                    <td><span class="status-pill" [class.available]="semilla.estado === 'Disponible'" [class.empty]="semilla.estado === 'Agotada'"><span></span>{{ semilla.estado }}</span></td>
+                    <td><div class="table-actions"><button type="button" class="action-btn edit" (click)="editar(semilla)" title="Editar" aria-label="Editar {{ semilla.nombre }}">✎</button><button type="button" class="action-btn delete" (click)="confirmarEliminar(semilla)" title="Eliminar" aria-label="Eliminar {{ semilla.nombre }}">⌫</button></div></td>
+                  </tr>
+                }
+              }
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footer"><span>Mostrando {{ semillasFiltradas.length }} de {{ semillas.length }} registros</span><span>Las cantidades se expresan en gramos.</span></div>
+      </section>
+      <footer class="page-footer">Banco Comunitario de Semillas <span>Conservar para compartir.</span></footer>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,69 @@
+<div class="login-page">
+  <div class="login-shell">
+    <section class="login-art">
+      <div class="brand-mark"><span>✿</span></div>
+      <p class="eyebrow">CONSERVAR · COMPARTIR · CULTIVAR</p>
+      <h1>Las semillas de hoy, la vida de mañana.</h1>
+      <p class="art-copy">Un espacio para organizar y cuidar las variedades que enriquecen nuestros cultivos y nuestra comunidad.</p>
+      <div class="seed-illustration" aria-hidden="true">
+        <span class="leaf leaf-one"></span><span class="leaf leaf-two"></span>
+        <span class="leaf leaf-three"></span><span class="stem"></span><span class="seed-dot"></span>
+      </div>
+      <div class="art-footer"><span>Banco Comunitario de Semillas</span><span>01 / 03</span></div>
+    </section>
+
+    <section class="login-form-panel">
+      <div class="mobile-brand"><span>✿</span> Banco de Semillas</div>
+      <div class="form-heading">
+        <span class="section-kicker">BIENVENIDO DE NUEVO</span>
+        <h2>Inicia sesión</h2>
+        <p>Ingresa tus credenciales para administrar el banco de semillas.</p>
+      </div>
+
+      <form [formGroup]="formulario" (ngSubmit)="ingresar()" novalidate>
+        <div class="mb-3">
+          <label for="correo" class="form-label">Correo electrónico</label>
+          <input id="correo" type="email" class="form-control form-control-lg" formControlName="correo"
+                 placeholder="nombre@correo.com" autocomplete="username"
+                 [class.is-invalid]="formulario.controls.correo.touched && formulario.controls.correo.invalid">
+          @if (formulario.controls.correo.touched && formulario.controls.correo.hasError('required')) {
+            <div class="invalid-feedback">El correo es obligatorio.</div>
+          } @else if (formulario.controls.correo.touched && formulario.controls.correo.hasError('email')) {
+            <div class="invalid-feedback">Ingresa un correo válido.</div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Contraseña</label>
+          <div class="password-wrap">
+            <input id="password" [type]="mostrarPassword ? 'text' : 'password'" class="form-control form-control-lg"
+                   formControlName="password" placeholder="Tu contraseña" autocomplete="current-password"
+                   [class.is-invalid]="formulario.controls.password.touched && formulario.controls.password.invalid">
+            <button type="button" class="password-toggle" (click)="mostrarPassword = !mostrarPassword"
+                    [attr.aria-label]="mostrarPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'">
+              {{ mostrarPassword ? 'Ocultar' : 'Ver' }}
+            </button>
+          </div>
+          @if (formulario.controls.password.touched && formulario.controls.password.hasError('required')) {
+            <div class="text-danger small mt-1">La contraseña es obligatoria.</div>
+          }
+        </div>
+
+        @if (error) {
+          <div class="alert alert-danger py-2 small" role="alert">{{ error }}</div>
+        }
+
+        <button type="submit" class="btn btn-primary btn-lg w-100 login-submit" [disabled]="cargando">
+          @if (cargando) { <span class="spinner-border spinner-border-sm me-2"></span>Validando... }
+          @else { Ingresar al sistema <span aria-hidden="true">→</span> }
+        </button>
+      </form>
+
+      <div class="login-note">
+        <span class="note-icon">i</span>
+        <span>Acceso reservado para el administrador del banco comunitario.</span>
+      </div>
+      <div class="login-bottom">Cuidamos la diversidad, una semilla a la vez.</div>
+    </section>
+  </div>
+</div>
